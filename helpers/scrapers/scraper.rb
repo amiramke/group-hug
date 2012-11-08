@@ -3,14 +3,20 @@ require 'open-uri'
 
 class Scrape
   attr_reader :doc
+  
   def initialize(url)
-    @doc = Nokogiri::HTML(open(url)) 
+    load(url)
   end
-
+  
   def css(sym)
    # @doc.{:css => "css"}[search_type](search_term)
     @doc.css( { confessions: 'td p', ids: 'h4 a' }[sym]).map { |item| item.content.strip }
   end
+
+  def load(url)
+    @doc =  Nokogiri::HTML(open(url)) 
+  end
+
 end
 
 # Get a Nokogiri::HTML::Document for the page we’re interested in...
