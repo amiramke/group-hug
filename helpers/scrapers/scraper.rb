@@ -7,9 +7,9 @@ class Scrape
     @doc = Nokogiri::HTML(open(url)) 
   end
 
-  def css(search_term)
+  def css(sym)
    # @doc.{:css => "css"}[search_type](search_term)
-    @doc.css(search_term)
+    @doc.css( { confessions: 'td p', ids: 'h4 a' }[sym]).map { |item| item.content.strip }
   end
 end
 
